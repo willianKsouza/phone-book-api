@@ -27,7 +27,7 @@ class Contact extends Model
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) =>  Storage::url('avatars/' . $value),
+            get: fn (?string $value) =>  Storage::url('avatars/' . $value),
         );
     }
 }

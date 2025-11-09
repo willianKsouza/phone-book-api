@@ -49,16 +49,8 @@ class ContactRepository implements ContactRepositoryInterface
     {
         $query = Contact::where('user_id', Auth::user()->id);
 
-        if ($dto->name) {
-            $query->where('name', 'like', '%'.$dto->name.'%');
-        }
-
-        if ($dto->phone) {
-            $query->where('phone', 'like', '%'.$dto->phone.'%');
-        }
-
-        if ($dto->email) {
-            $query->where('email', 'like', '%'.$dto->email.'%');
+        if ($dto->field && $dto->value) {
+            $query->where($dto->field, 'like', '%'.$dto->value.'%');
         }
 
         $contacts = $query->orderBy('created_at', 'desc')

@@ -17,7 +17,7 @@ class ContactsSeeder extends Seeder
         $users = User::all();
 
         $users->each(function ($user) {
-            Contact::factory(rand(5, 10))->create([
+            Contact::factory(50)->create([
                 'user_id' => $user->id,
             ]);
         });

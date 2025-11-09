@@ -19,11 +19,10 @@ class GetAllContactsController extends Controller
         $request->validated();
         
         $dto = new GetAllContactDTO(
-            $request->input('page'),
+            $request->input('page') ,
             $request->input('per_page'),
-            $request->input('name'),
-            $request->input('phone'),
-            $request->input('email'),
+            $request->input('field'),
+            $request->input('value'),
         );
         
         $contacts = $this->getAllContactsService->execute($dto);

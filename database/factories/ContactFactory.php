@@ -24,7 +24,7 @@ class ContactFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'avatar' => $this->faker->imageUrl(),
+            'avatar' => 'https://placehold.co/40x40',
             'phone' => $this->faker->phoneNumber,
         ];
     }

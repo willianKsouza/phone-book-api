@@ -24,9 +24,9 @@ class GetAllContactForm extends FormRequest
         return [
             'page' => ['sometimes', 'integer'],
             'per_page' => ['sometimes', 'integer'],
-            'name' => ['sometimes', 'nullable', 'string'],
-            'phone' => ['sometimes', 'nullable', 'string'],
-            'email' => ['sometimes', 'nullable', 'string', 'email'],
+            'field' => ['nullable', 'in:name,email,phone'],
+            'value' => ['nullable', 'string', 'max:255'],
+
         ];
     }
 }

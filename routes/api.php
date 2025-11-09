@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Contact\CreateContactController;
 use App\Http\Controllers\Contact\DeleteContactController;
 use App\Http\Controllers\Contact\GetAllContactsController;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
 
-Route::post('/logout', LoginController::class);
+Route::post('/logout', LogoutController::class);
 
 
 Route::middleware('auth:sanctum')->group(function () {
