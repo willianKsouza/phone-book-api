@@ -1,59 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Phone Book API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Uma API RESTful simples para gerenciamento de contatos, construída com Laravel.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Autenticação de usuário (Login/Logout).
+- Operações CRUD completas para contatos (Criar, Listar, Atualizar, Deletar).
+- Upload de avatar para contatos.
+- Paginação na listagem de contatos.
+- Ambiente de desenvolvimento local com Docker.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias Utilizadas
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** PHP 8.2+ / Laravel 12
+- **Banco de Dados:** MySQL 8.0
+- **Autenticação:** Laravel Sanctum
+- **Containerização:** Docker & Docker Compose
 
-## Learning Laravel
+## Pré-requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Começando
 
-## Laravel Sponsors
+Siga os passos abaixo para configurar e executar o ambiente de desenvolvimento local.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**1. Clone o repositório:**
 
-### Premium Partners
+```bash
+git clone https://github.com/seu-usuario/phone-book-api.git
+cd phone-book-api
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**2. Crie o arquivo de ambiente:**
 
-## Contributing
+Copie o arquivo de exemplo `.env.example` para um novo arquivo chamado `.env`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cp .env.example .env
+```
 
-## Code of Conduct
+**3. Configure as variáveis de ambiente:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Abra o arquivo `.env` e atualize as variáveis do banco de dados para corresponderem às configurações do `docker-compose.yml`:
 
-## Security Vulnerabilities
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=phone_book
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**4. Inicie os containers Docker:**
 
-## License
+Use o Docker Compose para construir e iniciar os serviços (servidor de banco de dados e phpMyAdmin).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+docker-compose up -d
+```
+
+**5. Instale as dependências do PHP:**
+
+Acesse o terminal do container da aplicação (que você precisará criar ou adicionar ao `docker-compose.yml`) para instalar as dependências do Composer. Se você não tem um container para a `app`, pode executar o composer localmente, desde que tenha o PHP e as extensões necessárias instaladas.
+
+*Nota: O `docker-compose.yml` fornecido não contém um serviço para a aplicação PHP. As instruções a seguir presumem que você executará os comandos `artisan` e `composer` em um ambiente PHP local ou em um container de aplicação que você adicionou.*
+
+Assumindo que você tenha um container de aplicação chamado `app`, os comandos seriam:
+
+```bash
+# Exemplo se houvesse um container 'app'
+docker-compose exec app composer install
+```
+
+**6. Gere a chave da aplicação:**
+
+```bash
+# Exemplo com container 'app'
+docker-compose exec app php artisan key:generate
+```
+
+**7. Execute as migrações e seeders:**
+
+Isso criará as tabelas no banco de dados e o populará com dados de exemplo.
+
+```bash
+# Exemplo com container 'app'
+docker-compose exec app php artisan migrate --seed
+```
+
+## Executando os Testes
+
+Para rodar a suíte de testes automatizados, execute o seguinte comando:
+
+```bash
+# Exemplo com container 'app'
+docker-compose exec app php artisan test
+```
+
+## Endpoints da API
+
+Todos os endpoints estão prefixados com `/api`.
+
+| Método   | Endpoint                     | Descrição                                | Requer Autenticação |
+| :------- | :--------------------------- | :--------------------------------------- | :------------------ |
+| `POST`   | `/login`                     | Autentica um usuário e retorna um token. | Não                 |
+| `POST`   | `/logout`                    | Invalida o token do usuário autenticado. | Sim                 |
+| `GET`    | `/users`                     | Obtém os dados do usuário autenticado.   | Sim                 |
+| `POST`   | `/contacts`                  | Cria um novo contato.                    | Sim                 |
+| `GET`    | `/contacts`                  | Lista todos os contatos do usuário.      | Sim                 |
+| `PATCH`  | `/contacts/{id}`             | Atualiza os dados de um contato.         | Sim                 |
+| `PATCH`  | `/contacts/{id}/avatar`      | Faz o upload do avatar de um contato.    | Sim                 |
+| `DELETE` | `/contacts/{id}`             | Deleta um contato específico.            | Sim                 |
+
+## Variáveis de Ambiente
+
+Estas são as principais variáveis que você precisa configurar no seu arquivo `.env`:
+
+```ini
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=phone_book
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+link no youtube: https://www.youtube.com/watch?v=pRgvHfulOmM
