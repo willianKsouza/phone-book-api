@@ -134,3 +134,4 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 link no youtube: https://www.youtube.com/watch?v=pRgvHfulOmM
+link do responsivo do app: https://youtu.be/GV6XMf1C3ts
